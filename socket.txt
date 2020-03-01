@@ -1,0 +1,61 @@
+s = socket.socket (socket_family, socket_type, protocol=0)
+socket_family − This is either AF_UNIX or AF_INET, as explained earlier.
+socket_type − This is either SOCK_STREAM or SOCK_DGRAM.
+protocol − This is usually left out, defaulting to 0.
+
+
+Server Socket Methods:-
+1:
+s.bind()
+
+This method binds address (hostname, port number pair) to socket.
+
+2:
+s.listen()
+
+This method sets up and start TCP listener.
+
+3:	
+s.accept()
+
+This passively accept TCP client connection, waiting until connection arrives (blocking).
+
+
+Client Socket Methods:
+
+1:	
+s.connect()
+
+This method actively initiates TCP server connection.
+
+
+
+1	
+s.recv()
+
+This method receives TCP message
+
+2	
+s.send()
+
+This method transmits TCP message
+
+3	
+s.recvfrom()
+
+This method receives UDP message
+
+4	
+s.sendto()
+
+This method transmits UDP message
+
+5	
+s.close()
+
+This method closes socket
+
+6	
+socket.gethostname()
+
+Returns the hostname.

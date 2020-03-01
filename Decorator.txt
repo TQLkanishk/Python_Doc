@@ -1,0 +1,150 @@
+'''
+A function defined inside another function is called a nested function. Nested functions can access variables of the enclosing scope.
+
+'''
+
+# def print_msg(msg):
+# # This is the outer enclosing function
+#
+#     def printer():
+# # This is the nested function
+#         print(msg)
+#
+#     return printer  # this got changed
+#
+# # Now let's try calling this function.
+# # Output: Hello
+# another = print_msg("Hello")
+# print (another)
+# another()
+
+
+"""
+what would happen if the last line of the function print_msg() returned the printer() 
+function instead of calling it? The print_msg() function was called with the string "Hello"
+ and the returned function was bound to the name another. On calling another(), 
+ the message was still remembered although we had already finished executing the print_msg() 
+ function.
+
+This technique by which some data ("Hello") gets attached to the code is called closure in Python.
+"""
+#
+# def print_msg(msg):
+# # This is the outer enclosing function
+#
+#     def printer():
+# # This is the nested function
+#         print(msg)
+#
+#     return printer  # this got changed
+#
+# # Now let's try calling this function.
+# # Output: Hello
+# another = print_msg("Hello")
+# another()
+# # del print_msg
+# # another()
+# # print_msg("Hello")
+
+
+"""
+Decorator:-
+Python has an interesting feature called decorators to add functionality to an existing 
+code.This is also called metaprogramming as a part of the
+ program tries to modify another part of the program at compile time.
+"""
+
+def first(msg):
+    print(msg)
+
+first("Hello")
+
+second = first
+second("Hello")
+
+"""
+A function that take other functions as arguments are also called higher order functions. 
+"""
+
+def inc(x):
+    return x + 1
+
+def dec(x):
+    return x - 1
+
+def operate(func, number):
+    result = func(number)
+    return result
+
+"""
+Furthermore, a function can return another function object.
+"""
+
+def is_called():
+    def is_returned():
+        print("Hello")
+    return is_returned
+
+new = is_called()
+
+#Outputs "Hello"
+new()
+
+
+
+"""
+Functions and methods are called callable as they can be called.
+In fact, any object which implements the special method __call__() is termed callable. 
+So, in the most basic sense, a decorator is a callable that returns a callable.
+
+Basically, a decorator takes in a function, adds some functionality and returns it.
+"""
+#
+# def make_pretty(func):
+#     def inner():
+#         print("I got decorated")
+#         func()
+#     return inner
+#
+# def ordinary():
+#     print("I am ordinary")
+#
+# obj_fun = make_pretty(ordinary)
+# obj_fun()
+
+
+# def smart_divide(func):
+#    def inner(a,b):
+#       print("I am going to divide",a,"and",b)
+#       if b == 0:
+#          print("Whoops! cannot divide")
+#          return
+#
+#       return func(a,b)
+#    return inner
+#
+# @smart_divide
+# def divide(a,b):
+#     return a/b
+
+
+# 
+# def star(func):
+#     def inner(*args, **kwargs):
+#         print("*" * 30)
+#         func(*args, **kwargs)
+#         print("*" * 30)
+#     return inner
+# 
+# def percent(func):
+#     def inner(*args, **kwargs):
+#         print("%" * 30)
+#         func(*args, **kwargs)
+#         print("%" * 30)
+#     return inner
+# 
+# @star
+# @percent
+# def printer(msg):
+#     print(msg)
+# printer("Hello")

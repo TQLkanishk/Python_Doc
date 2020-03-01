@@ -1,0 +1,211 @@
+class is a bluprint of a object:
+Like before manufacturing a phone we need a bluprint of that phone, A design for that phone. 
+combination of attribute and Behaviour
+attribute:Variable
+Behaviour:Method
+
+Objectis  a instance of a class:
+Once we give a bluprint or a design of a phone to that manufacturing machine it produces phone out of it.
+
+Variable: There are two type of variable
+instance variable
+class Comp:
+	def __init__(self):
+		self.name = "Kanishk"
+		self.sal = 100000000
+		
+c1 = Comp()
+c2 = Comp()
+
+print(c1.sal)
+print(c2.sal)
+
+c1.sal = 100000000
+
+print(c1.sal)
+print(c2.sal)
+
+	
+=====================================  class variable =====================
+
+
+class Comp:
+	tech = "Py"
+	def __init__(self):
+		self.name = "Kanishk"
+		self.sal = 100000000
+		
+c1 = Comp()
+c2 = Comp()
+
+print(c1.tech)
+print(c2.tech)
+
+Comp.tech = "Python"
+
+print(c1.tech)
+print(c2.tech)
+======================================================
+Accessor (getters)
+Mutator  (setter)
+
+==================================================
+For accessing class variable you required class Method that is called class Method.
+=================================================
+@staticmethod
+def info()
+	print ()
+
+========
+
+
+
+==========================================================
+#Inner Class
+#Print which kind of laptop student is using
+class Student():
+    # def __init__(self, name, roll_no, l_company, l_ram, l_processor):
+    #     self.name = name
+    #     self.roll_no = roll_no
+    #     self.company = l_company
+    #     self.l_ram = l_ram
+    #     self.l_prcessor = l_processor
+
+    def __init__(self, name, roll_no):
+        self.name = name
+        self.roll_no = roll_no
+        self.lap = self.Laptop()
+
+    # def show(self):
+    #     print(self.roll_no, self.name, self.company, self.l_ram, self.l_prcessor)
+
+    def show(self):
+        print(self.roll_no, self.name)
+
+    class Laptop():
+        def __init__(self):
+            self.processor = "i3"
+            self.ram = "8Gb"
+            self.cmpny = "Dell"
+
+# s1 = Student("kanishk", 20)
+# print(s1.name)
+#Similarly we can pass the more variable to the class like Like laptop company, ram, processor etc
+
+s1 = Student("kanishk", 20)
+s1.show()
+print(s1.lap.cmpny)
+
+#we can also create laptop object outside
+l1 = Student.Laptop()
+print(l1.processor)
+=======================================================================
+Single level inheritance
+Class A():
+	pass
+	
+class B(A):
+	pass
+	
+Multi level inheritance
+Class A():
+	pass
+	
+class B(A):
+	pass
+	
+	
+class C(B):
+	pass
+
+Multiple inheritance
+Class A():
+	pass
+	
+class B():
+	pass
+	
+	
+class C(A,B):
+	pass
+
+=====================================================================================
+	
+Polymorphism =    Poly + morph +ism
+One thing having  (Many) (Form)
+========================================================			   
+Duck Typing:
+			   
+class PyCharm:
+    def execute(self):
+        print("Running")
+        print("Compiling")
+
+class MyEditor:
+    def execute(self):
+        print("spell check")
+        print("Convention check")
+        print("Running")
+        print("Compiling")
+
+class Laptop:
+    def code(self, ide):
+        ide.execute()
+p1 = PyCharm()
+m1 = MyEditor()
+l1 = Laptop()
+l1.code(m1)
+==============================================================
+Operator Overloadding
+
+print(5+6)
+
+or 
+
+print('a'+'b')
+
+internally it call __add__ method from int and str
+
+print(int.__add__(5+6))
+
+magic method:-
+__add__
+__sub__
+__mul__
+__div__
+
+class Student:
+
+def __init__(self, m1, m2):
+	self.m1 = m1
+	self.m2 = m2
+	
+	
+s1= Student(23, 45)
+s2= Student(33, 56)
+s3= s1+s2
+=============================================
+Method Overloadding
+def product(a, b): 
+    p = a * b 
+    print(p) 
+      
+# Second product method 
+# Takes three argument and print their 
+# product 
+def product(a, b, c): 
+    p = a * b*c 
+    print(p) 
+=============================================
+Method Overriding
+
+class A:
+    def show(self, a):
+	    print("This is class A show")
+		
+		
+class B(A):
+    def show(self, a):
+	    print("This is class A show")
+
+=============================================

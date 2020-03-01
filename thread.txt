@@ -1,0 +1,164 @@
+
+
+Thread can be thought of as seprate programs running along side each other.
+They run within one process, means they can share data between one another.
+Its hard to manage especially when a piece of data is being used by more than one thread.
+
+We alredy use one thread in our programs. 
+When we create a new thread it run along side our main method.
+
+
+
+
+The Thread class represents an activity: There are two ways to specify the activity
+by passing a callable object to the constructor
+or by overriding the run() method in a subclass
+
+Once a thread object is created, its activity must be started by calling the thread’s start() method. This invokes the run() method in a separate thread 
+of control.
+
+Once the thread’s activity is started, the thread is considered ‘alive’. It stops being alive when its run() method terminates – either normally, or by 
+raising an unhandled exception. The is_alive() method tests whether the thread is alive. 
+
+Other threads can call a thread’s join() method. This blocks the calling thread until the thread whose join()
+ method is called is terminated.
+
+A thread has a name. The name can be passed to the constructor, and read or changed through the name attribute
+
+
+
+__name__
+
+
+# import random
+#
+# def _get_random_index(length):
+#     """
+#     This function will return a list having index of string
+#     :param length:
+#     :return:
+#     """
+#     index_list = []
+#     for i in range(random.randint(1,length)):
+#         index_list.append(random.randint(0,length))
+#     return index_list
+#
+# def get_random_string(string):
+#     """
+#     This function is responsible for returning the same string with few of character in capital.
+#     Example:-
+#     input_string="kanishk" #output can be like
+#     output_string="kaniSHk"
+#     :param string:
+#     :return: string
+#     """
+#     updated_string = ""
+#     index_list = _get_random_index(len(string))
+#     for index in range(len(string)):
+#         if index in index_list:
+#             updated_string +=string[index].upper()
+#         else:
+#             updated_string +=string[index]
+#
+#     return updated_string
+#
+# input_string = input("Enter a string:-")
+# print(get_random_string(input_string))
+#
+#
+
+
+
+# from threading import Thread
+# import time
+#
+# def timer(name, delay, repeat):
+#     print ("Timer"+name+"Started")
+#     while repeat>0:
+#         time.sleep(delay)
+#         print (name + ":" +str(time.ctime(time.time())) )
+#         repeat -= 1
+#     print ("Timer: " + name + " Completed")
+#
+#
+# def Main():
+#     t1 = Thread(target=timer, args=("Thread1", 1, 5))
+#     t2 = Thread(target=timer, args=("Thread2", 2, 5))
+#
+#     t1.start()
+#     t2.start()
+#
+#     # t1.join()
+#     # t2.join()
+#
+#     print ("Main Function completed")
+#
+# if __name__ == '__main__':
+#     Main()
+
+
+
+# import threading
+# import time
+# class AsyncWrite(threading.Thread):
+#     def __init__(self, text, out):
+#         threading.Thread.__init__(self)
+#         self.text = text
+#         self.out = out
+#
+#     def run(self):
+#         fd  = open(self.out, 'a')
+#         fd.write(self.text + "\n")
+#         fd.close()
+#         time.sleep(2)
+#         print ("Finished Background file write to " + self.out)
+#
+# def Main():
+#     message = input("Enter a string to store: ")
+#
+#     background = AsyncWrite(message, 'out.txt')
+#     background.start()
+#     print ("The programs can continue to run while it write in another thread")
+#     print (1000+1)
+#
+#     background.join()
+#     print ("Waited untill thread was completed")
+#
+# if __name__ == '__main__':
+#     Main()
+
+
+
+
+import threading
+import time
+
+tLock = threading.Lock()
+def timer(name, delay, repeat):
+    print ("Timer"+name+"Started")
+    tLock.acquire()
+    print (name + "has aquired the thread")
+    while repeat>0:
+        time.sleep(delay)
+        print (name + ":" +str(time.ctime(time.time())) )
+        repeat -= 1
+
+    print (name + ": is relasing the lock")
+    tLock.release()
+    print ("Timer: " + name + " Completed")
+
+
+def Main():
+    t1 = threading.Thread(target=timer, args=("Thread1", 1, 5))
+    t2 = threading.Thread(target=timer, args=("Thread2", 2, 5))
+
+    t1.start()
+    t2.start()
+
+    # t1.join()
+    # t2.join()
+
+    print ("Main Function completed")
+
+if __name__ == '__main__':
+    Main()

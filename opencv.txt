@@ -1,0 +1,497 @@
+
+import cv2
+
+cap = cv2.VideoCapture(0)
+
+while(True):
+    ref, frame = cap.read()
+    cv2.imshow('frame', frame)
+==========================================================
+import cv2
+
+cap = cv2.VideoCapture(0)
+
+while(True):
+    ref, frame = cap.read()
+    cv2.imshow('frame', frame)
+    if cv2.waitKey(20) & 0xFF == ord('q'):
+        break
+
+=========================================================
+import cv2
+
+cap = cv2.VideoCapture(0)
+
+while(True):
+    ref, frame = cap.read()
+    # Our operations on the frame come here
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    
+    cv2.imshow('frame', frame)
+    cv2.imshow('gray',gray)
+    
+    if cv2.waitKey(20) & 0xFF == ord('q'):
+        break
+
+cap.release()
+cv2.destroyAllWindows()		
+==========================================================
+import cv2
+
+cap = cv2.VideoCapture(0)
+
+def rescale_frame(frame, percent=75):
+    width = int(frame.shape[1] * percent/ 100)
+    height = int(frame.shape[0] * percent/ 100)
+    dim = (width, height)
+    return cv2.resize(frame, dim, interpolation =cv2.INTER_AREA)
+
+while True:
+    rect, frame = cap.read()
+    frame75 = rescale_frame(frame, percent=75)
+    cv2.imshow('frame75', frame75)
+    frame150 = rescale_frame(frame, percent=150)
+    cv2.imshow('frame150', frame150)
+    if cv2.waitKey(20) & 0xFF == ord('q'):
+        break
+===========================Recording=================================
+
+Display an image:-
+cv2.imshow('image',img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+cv2.waitKey() is a keyboard binding function. Its argument is the time in milliseconds.
+The function waits for specified milliseconds for any keyboard event. 
+If you press any key in that time, the program continues. 
+If 0 is passed, it waits indefinitely for a key stroke. 
+It can also be set to detect specific key strokes like, if key a is pressed etc which we will discuss below.
+
+cv2.destroyAllWindows() simply destroys all the windows we created. 
+If you want to destroy any specific window, use the function cv2.destroyWindow() where you pass the exact window name as the argument.
+
+
+Using Matplotlib
+Matplotlib is a plotting library for Python which gives you wide variety of plotting methods. 
+You will see them in coming articles. Here, you will learn how to display image with Matplotlib. 
+You can zoom images, save it etc using Matplotlib.
+
+
+=====================================read the doc=============================
+Objective
+Here, you will learn how to read an image, how to display it and how to save it back
+Functions to learn : cv2.imread(), cv2.imshow() , cv2.imwrite()
+
+Read an image:-
+cv2.imread() to read an image.
+arg1:- full path of image
+arg2:-cv2.IMREAD_COLOR : Loads a color image (default flag)
+arg3:-cv2.IMREAD_GRAYSCALE : Loads image in grayscale mode
+arg4:-cv2.IMREAD_UNCHANGED : Loads image as such including alpha channel
+Pointer:-
+	Instead of these three flags, you can simply pass integers 1, 0 or -1 respectively.
+	Even if the image path is wrong, it won’t throw any error, but print img will give you None
+
+
+import cv2
+
+img = cv2.imread('messi5.jpg',0)
+cv2.imshow('image',img)
+k = cv2.waitKey(0)
+if k == 27:         # wait for ESC key to exit
+    cv2.destroyAllWindows()
+elif k == ord('s'): # wait for 's' key to save and exit
+    cv2.imwrite('messigray.png',img)
+    cv2.destroyAllWindows()
+	
+Above program loads an image in grayscale, displays it, save the image if you press ‘s’ and exit, or simply exit 
+without saving if you press ESC key.
+	
+Note:-If you are using a 64-bit machine, you will have to modify k = cv2.waitKey(0) line as follows : 
+k = cv2.waitKey(0) & 0xFF
+
+
+
+import cv2
+import matplotlib.pyplot as plt
+
+img = cv2.imread('C:\\Users\\kanishk.pandey\\Desktop\\durga.JPG', -1)
+b,g,r = cv2.split(img)
+img2 = cv2.merge([r,g,b])
+
+plt.subplot(121);plt.imshow(img) # expects distorted color
+plt.subplot(122);plt.imshow(img2) # expect true color
+plt.show()
+
+cv2.imshow('bgr image',img) # expects true color
+cv2.imshow('rgb image',img2) # expects distorted color
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+=====================================================================
+Objective:-
+read video, display video and save video.
+capture from Camera and display it.
+Functions : cv2.VideoCapture(), cv2.VideoWriter()
+
+
+Capture Video from Camera:-
+
+cv2.destroyAllWindows() simply destroys all the windows we created. 
+If you want to destroy any specific window, use the function cv2.destroyWindow() where you pass the exact window name as the argument.		
+
+Start your cam:-
+import cv2
+
+cap = cv2.VideoCapture(0)
+
+while(True):
+    # Capture frame-by-frame
+    ret, frame = cap.read()
+
+    # Our operations on the frame come here
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2XYZ)
+
+    # Display the resulting frame
+    cv2.imshow('frame',gray)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+# When everything done, release the capture
+cap.release()
+cv2.destroyAllWindows()
+
+cap.read() returns a bool (True/False). If frame is read correctly, it will be True. 
+So you can check end of the video by checking this return value.
+=====================================================================
+Objective:
+draw different geometric shapes with OpenCV
+Functions : cv2.line(), cv2.circle() , cv2.rectangle(), cv2.ellipse(), cv2.putText() etc.
+
+In all the above functions, you will see some common arguments as given below:
+Argument:-
+img : The image where you want to draw the shapes
+color : Color of the shape
+thickness : Thickness of the line or circle etc
+lineType : Type of line
+
+===================================================Draw Line================================
+
+def line(img, pt1, pt2, color, thickness=None, lineType=None, shift=None):
+img:- Image.
+pt1: First point of the line segment.
+pt2: Second point of the line segment.
+color: Line color.
+thickness: Line thickness.
+lineType: Type of the line. See #LineTypes.
+shift Number of fractional bits in the point coordinates.
+
+
+
+import cv2
+import numpy as np
+
+# Create a black image
+img = np.zeros((512,512,3), np.uint8)
+
+# Draw a diagonal blue line with thickness of 5 px
+img = cv2.line(img,(0,0),(50,500),(255,0,0),5)
+cv2.imshow('image', img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+===================================================Draw Rectangle================================
+
+import cv2
+import numpy as np
+
+# Create a black image
+img = np.zeros((512,512,3), np.uint8)
+
+# Draw a diagonal blue line with thickness of 5 px
+img = cv2.rectangle(img,(384,10),(450,150),(0,255,0),3)
+cv2.imshow('image', img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+===============================================================================
+read video, display video and save video.
+Functions : cv2.VideoCapture(), cv2.VideoWriter()
+
+
+create a VideoCapture object. Its argument can be either the device index or the name of a video file. 
+Device index is just the number to specify which camera. Normally one camera will be connected (as in my case). 
+So I simply pass 0 (or -1). You can select the second camera by passing 1 and so on.
+After that, you can capture frame-by-frame. But at the end, don’t forget to release the capture.
+
+import numpy as np
+import cv2
+
+cap = cv2.VideoCapture(0)
+
+while(True):
+    # Capture frame-by-frame
+    ret, frame = cap.read()
+
+    # Our operations on the frame come here
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+    # Display the resulting frame
+    cv2.imshow('frame',gray)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+# When everything done, release the capture
+cap.release()
+cv2.destroyAllWindows()
+
+cap.read() returns a bool (True/False). If frame is read correctly, it will be True. So you can check end of the 
+video by checking this return value.
+
+Sometimes, cap may not have initialized the capture. In that case, this code shows error. You can check whether 
+it is initialized or not by the method cap.isOpened(). If it is True, OK. Otherwise open it using cap.open().
+
+Note:-Make sure proper versions of ffmpeg or gstreamer is installed. Sometimes, it is a headache to work with
+ Video Capture mostly due to wrong installation of ffmpeg/gstreamer.
+==============================Saving a Video===========================================
+we create a VideoWriter object. We should specify the output file name (eg: output.avi). Then we should specify the 
+FourCC code (details in next paragraph). Then number of frames per second (fps) and frame size should be passed. 
+And last one is isColor flag. If it is True, encoder expect color frame, otherwise it works with grayscale frame.
+
+FourCC is a 4-byte code used to specify the video codec. The list of available codes can be found in fourcc.org. 
+It is platform dependent. 
+
+Fedora: DIVX, XVID, MJPG, X264, WMV1, WMV2. (XVID is more preferable. MJPG results in high size video. X264 gives very small size video)
+Windows: DIVX (More to be tested and added)
+OSX : (I don’t have access to OSX. Can some one fill this?)
+
+FourCC code is passed as cv2.VideoWriter_fourcc('M','J','P','G') or cv2.VideoWriter_fourcc(*'MJPG) for MJPG.
+
+import numpy as np
+import cv2
+
+cap = cv2.VideoCapture(0)
+
+# Define the codec and create VideoWriter object
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+out = cv2.VideoWriter('output.avi',fourcc, 20.0, (640,480))
+
+while(cap.isOpened()):
+    ret, frame = cap.read()
+    if ret==True:
+        frame = cv2.flip(frame,0)
+
+        # write the flipped frame
+        out.write(frame)
+
+        cv2.imshow('frame',frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+    else:
+        break
+
+# Release everything if job is finished
+cap.release()
+out.release()
+cv2.destroyAllWindows()
+========================================================================
+Image Processing in openCV 
+
+you will learn how to convert images from one color-space to another, like BGR \leftrightarrow Gray,
+BGR \leftrightarrow HSV etc.
+
+cv2.cvtColor()
+cv2.inRange()
+
+import cv2
+import numpy as np
+
+cap = cv2.VideoCapture(0)
+
+while(1):
+
+    # Take each frame
+    ret, frame = cap.read()
+
+    # Convert BGR to HSV
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+
+    # define range of blue color in HSV
+    lower_blue = np.array([110,50,50])
+    upper_blue = np.array([130,255,255])
+
+    # Threshold the HSV image to get only blue colors
+    mask = cv2.inRange(hsv, lower_blue, upper_blue)
+
+    # Bitwise-AND mask and original image
+    res = cv2.bitwise_and(frame,frame, mask= mask)
+
+    cv2.imshow('frame',frame)
+    cv2.imshow('mask',mask)
+    cv2.imshow('res',res)
+    k = cv2.waitKey(5) & 0xFF
+    if k == 27:
+        break
+
+cv2.destroyAllWindows()
+=========================================
+Geometric Transformations of Images
+
+Learn to apply different geometric transformation to images like translation, rotation, affine transformation etc.
+cv2.getPerspectiveTransform
+
+M= 1   0    tx
+   0   1    ty
+   
+import cv2
+import numpy as np
+
+img = cv2.imread('C:\\Users\\kanishk.pandey\\Desktop\\durga.jpg',0)
+rows,cols = img.shape
+print(rows, cols)
+
+M = np.float32([[1,0,200],[0,1,200]])
+dst = cv2.warpAffine(img,M,(cols,rows))
+
+cv2.imshow('img',dst)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+================================================
+Haar Cascades Classifier:
+
+import cv2
+cv2.__file__ # This will give you opencv file location
+
+Output:-C:\\Users\\kanishk.pandey\\AppData\\Local\\Programs\\Python\\Python36-32\\lib\\site-packages\\cv2\\
+
+Got to that path and copy data folder and keep this in your directory
+
+import numpy as np
+import cv2
+
+face_cascade = cv2.CascadeClassifier('D:\Face_recogn\cascade\src\data\haarcascade_frontalface_alt2.xml')
+cap = cv2.VideoCapture(0)
+
+while(True):
+    # Capture frame-by-frame
+    cnt = 0
+    ret, frame = cap.read()
+
+    # Our operations on the frame come here
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.5, minNeighbors=5)
+
+    for (x,y,w,h) in faces:
+        cnt +=1
+        print(x,y,w,h)
+        roi_gray = gray[y:y+h, x:x+w]
+        roi_color = frame[y:y+h, x:x+w]
+        img_item = "my_image"
+        cv2.imwrite('D:\\Face_recogn\\cascade\\src\\training\\'+img_item+str(cnt)+'.jpg', roi_gray)
+
+
+    # Display the resulting frame
+    cv2.imshow('frame',gray)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+# When everything done, release the capture
+cap.release()
+cv2.destroyAllWindows()
+
+Rectangle to face:-
+
+import numpy as np
+import cv2
+
+face_cascade = cv2.CascadeClassifier('D:\Face_recogn\cascade\src\data\haarcascade_frontalface_alt2.xml')
+cap = cv2.VideoCapture(0)
+
+while(True):
+    # Capture frame-by-frame
+    cnt = 0
+    ret, frame = cap.read()
+
+    # Our operations on the frame come here
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    faces = face_cascade.detectMultiScale(frame, scaleFactor=1.5, minNeighbors=5)
+
+    for (x,y,w,h) in faces:
+        cnt +=1
+        print(x,y,w,h)
+        roi_gray = gray[y:y+h, x:x+w]
+        roi_color = frame[y:y+h, x:x+w]
+        img_item = "my_image"
+        cv2.imwrite('D:\\Face_recogn\\cascade\\src\\training\\'+img_item+str(cnt)+'.jpg', roi_color)
+
+        color = (255, 0, 0)
+        stroke = 2
+        end_cord_x = x+w
+        end_cord_y = x + h
+        cv2.rectangle(frame, (x,y), (end_cord_x, end_cord_y), color, stroke)
+
+    # Display the resulting frame
+    cv2.imshow('frame',frame)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+# When everything done, release the capture
+cap.release()
+cv2.destroyAllWindows()
+
+# Recognizer:-
+
+import cv2
+import os
+import numpy as np
+from PIL import Image
+import pickle
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+image_dir = os.path.join(BASE_DIR, "images")
+
+face_cascade = cv2.CascadeClassifier('cascades/data/haarcascade_frontalface_alt2.xml')
+recognizer = cv2.face.LBPHFaceRecognizer_create()
+
+current_id = 0
+label_ids = {}
+y_labels = []
+x_train = []
+
+for root, dirs, files in os.walk(image_dir):
+	for file in files:
+		if file.endswith("png") or file.endswith("jpg"):
+			path = os.path.join(root, file)
+			label = os.path.basename(root).replace(" ", "-").lower()
+			#print(label, path)
+			if not label in label_ids:
+				label_ids[label] = current_id
+				current_id += 1
+			id_ = label_ids[label]
+			#print(label_ids)
+			#y_labels.append(label) # some number
+			#x_train.append(path) # verify this image, turn into a NUMPY arrray, GRAY
+			pil_image = Image.open(path).convert("L") # grayscale
+			size = (550, 550)
+			final_image = pil_image.resize(size, Image.ANTIALIAS)
+			image_array = np.array(final_image, "uint8")
+			#print(image_array)
+			faces = face_cascade.detectMultiScale(image_array, scaleFactor=1.5, minNeighbors=5)
+
+			for (x,y,w,h) in faces:
+				roi = image_array[y:y+h, x:x+w]
+				x_train.append(roi)
+				y_labels.append(id_)
+
+
+#print(y_labels)
+#print(x_train)
+
+with open("pickles/face-labels.pickle", 'wb') as f:
+	pickle.dump(label_ids, f)
+
+recognizer.train(x_train, np.array(y_labels))
+recognizer.save("recognizers/face-trainner.yml")

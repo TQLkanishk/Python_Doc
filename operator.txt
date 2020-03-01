@@ -1,0 +1,42 @@
+Arithmetic Operators
+a + b
+a – b
+a * b
+b / a
+b % a
+a**b
+//
+
+Comparison (Relational) Operators
+(a == b)
+(a != b)
+(a <> b)
+(a > b)
+(a < b)
+(a >= b)
+(a <= b)
+
+Assignment Operators
+=
++=
+-=
+*=
+/=
+%=
+**=
+//=
+
+Logical Operators
+(a and b)
+(a or b)
+Not(a and b)
+
+Bitwise Operators
+(a & b)
+(a | b)
+(a ^ b) xor (1 ^ 0 = 1, 0 ^ 1 = 1, 1 ^ 1 = 0, 0 ^ 0 = 1)
+~ Binary Ones Complement
+
+Membership Operators
+
+Identity Operators
